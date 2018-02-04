@@ -8,19 +8,19 @@ using Newtonsoft.Json.Serialization;
 
 namespace WebApiwithSqlserver
 {
-    public class CustomJsonFormatter : JsonMediaTypeFormatter
-    {
-        public CustomJsonFormatter()
-        {
-            this.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
-        }
+    //public class CustomJsonFormatter : JsonMediaTypeFormatter
+    //{
+    //    public CustomJsonFormatter()
+    //    {
+    //        this.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+    //    }
 
-        public override void SetDefaultContentHeaders(Type type, HttpContentHeaders headers, MediaTypeHeaderValue mediaType)
-        {
-            base.SetDefaultContentHeaders(type, headers, mediaType);
-            headers.ContentType = new MediaTypeHeaderValue("application/json");
-        }
-    }
+    //    public override void SetDefaultContentHeaders(Type type, HttpContentHeaders headers, MediaTypeHeaderValue mediaType)
+    //    {
+    //        base.SetDefaultContentHeaders(type, headers, mediaType);
+    //        headers.ContentType = new MediaTypeHeaderValue("application/json");
+    //    }
+    //}
 
 
 
@@ -40,7 +40,7 @@ namespace WebApiwithSqlserver
             );
 
             //you can execute your own created class which is inherited from the base class like this --->
-            config.Formatters.Add(new CustomJsonFormatter());
+            //config.Formatters.Add(new CustomJsonFormatter());
 
 
             // this line only returns the Json format data
