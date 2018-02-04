@@ -52,6 +52,35 @@ namespace WebApiwithSqlserver.Controllers
             }
             catch (Exception ex)
             {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+            
+        }
+
+        public HttpResponseMessage Delete(int id)
+        {
+            try
+            {
+                using (EmployeeApiDBEntities entities = new EmployeeApiDBEntities())
+                {
+                    var entity = entities.Employees.FirstOrDefault(e => e.ID == id);
+
+                    if (entity == null)
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound,
+                            "Employee with Id = " + id.ToString() + "not found to delete");
+                    }
+                    else
+                    {
+                        entities.Employees.Remove(entity);
+                        entities.SaveChanges();
+                        return Request.CreateResponse(HttpStatusCode.OK);
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
 
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
