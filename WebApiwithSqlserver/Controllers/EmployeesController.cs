@@ -86,5 +86,31 @@ namespace WebApiwithSqlserver.Controllers
             }
             
         }
+
+        public HttpResponseMessage Put(int id, [FromBody] Employee employee)
+        {
+            using (EmployeeApiDBEntities entities = new EmployeeApiDBEntities())
+            {
+                var entity = entities.Employees.FirstOrDefault(e => e.ID == id);
+
+                if (entity == null)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.NotFound,
+                        "Employee with id = " + id.ToString() + " No found to update");
+                }
+                else
+                {
+                    entity.FirstName = employee.FirstName;
+                    entity.LastName = employee.LastName;
+                    entity.Gender = employee.Gender;
+                    entity.Salary = employee.Salary;
+                    entities.SaveChanges();
+
+                    return Request.CreateResponse(HttpStatusCode.OK,entity);
+                }
+                
+
+            }
+        }
     }
 }
