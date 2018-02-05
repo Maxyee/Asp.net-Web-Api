@@ -10,7 +10,17 @@ namespace WebApiwithSqlserver.Controllers
 {
     public class EmployeesController : ApiController
     {
-        public IEnumerable<Employee> Get()
+        //public IEnumerable<Employee> Get()   // if we fix the prefix word Get then it will aumatically work as a Get
+        //public IEnumerable<Employee> GetSomething()
+        //{
+        //    using (EmployeeApiDBEntities entities = new EmployeeApiDBEntities())
+        //    {
+        //        return entities.Employees.ToList();
+        //    }
+        //}
+
+        [HttpGet]
+        public IEnumerable<Employee> LoadAllEmployees()
         {
             using (EmployeeApiDBEntities entities = new EmployeeApiDBEntities())
             {
@@ -18,7 +28,27 @@ namespace WebApiwithSqlserver.Controllers
             }
         }
 
-        public HttpResponseMessage Get(int id)
+
+        //public HttpResponseMessage Get(int id)
+        //{
+        //    using (EmployeeApiDBEntities entities = new EmployeeApiDBEntities())
+        //    {
+        //        var entity = entities.Employees.FirstOrDefault(e => e.ID == id);
+
+        //        if (entity != null)
+        //        {
+        //            return Request.CreateResponse(HttpStatusCode.OK, entity);
+        //        }
+        //        else
+        //        {
+        //            return Request.CreateErrorResponse(HttpStatusCode.NotFound,
+        //                "Employee with Id = " + id.ToString() + " not found");
+        //        }
+        //    }
+        //}
+
+        [HttpGet]
+        public HttpResponseMessage LoadEmployeeById(int id)
         {
             using (EmployeeApiDBEntities entities = new EmployeeApiDBEntities())
             {
