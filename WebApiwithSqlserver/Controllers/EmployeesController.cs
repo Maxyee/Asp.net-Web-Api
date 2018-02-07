@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security;
 using System.Web.Http;
 using EmployeeDataAccess;
 
@@ -10,23 +11,39 @@ namespace WebApiwithSqlserver.Controllers
 {
     public class EmployeesController : ApiController
     {
-        //public IEnumerable<Employee> Get()   // if we fix the prefix word Get then it will aumatically work as a Get
+        public HttpResponseMessage Get(string gender="All")   // if we fix the prefix word Get then it will aumatically work as a Get
         //public IEnumerable<Employee> GetSomething()
+        {
+            
+            using (EmployeeApiDBEntities entities = new EmployeeApiDBEntities())
+            {
+                switch (gender.ToLower())
+                {
+                    case "all":
+                        return Request.CreateResponse(HttpStatusCode.OK, entities.Employees.ToList());
+
+                    case "male":
+                        return Request.CreateResponse(HttpStatusCode.OK, entities.Employees.Where(e => e.Gender.ToLower() == "male").ToList());
+
+                    case "female":
+                        return Request.CreateResponse(HttpStatusCode.OK, entities.Employees.Where(e => e.Gender.ToLower() == "female").ToList());
+                    
+                    default:
+                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
+                            "value for gender must be all, male, female" + gender + "is invalid" );
+                }
+                //return entities.Employees.ToList();
+            }
+        }
+
+        //[HttpGet]
+        //public IEnumerable<Employee> LoadAllEmployees()
         //{
         //    using (EmployeeApiDBEntities entities = new EmployeeApiDBEntities())
         //    {
         //        return entities.Employees.ToList();
         //    }
         //}
-
-        [HttpGet]
-        public IEnumerable<Employee> LoadAllEmployees()
-        {
-            using (EmployeeApiDBEntities entities = new EmployeeApiDBEntities())
-            {
-                return entities.Employees.ToList();
-            }
-        }
 
 
         //public HttpResponseMessage Get(int id)
