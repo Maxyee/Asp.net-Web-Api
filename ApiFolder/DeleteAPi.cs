@@ -22,7 +22,7 @@ namespace glostars.Controllers.Api
         
         [HttpDelete]
         [AllowAnonymous]
-        public async Task<HttpResponseMessage> DeleteUserCustom(string email)
+        public async Task<HttpResponseMessage> DeleteUser(string email)
         {
             var model1 = _db.Users.FirstOrDefault(x => x.Email == email);
             if (model1 == null)
